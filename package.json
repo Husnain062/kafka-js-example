@@ -1,0 +1,22 @@
+{
+  "name": "kafka-js-example",
+  "version": "1.0.0",
+  "description": "A simple Apache Kafka example",
+  "main": "./bff/server.js",
+  "scripts": {
+    "start:kafka:podman": "podman-compose -f docker-compose.yml up -d",
+    "start:kafka:docker": "docker-compose -f docker-compose.yml up -d",
+    "stop:kafka:podman": "podman-compose -f docker-compose.yml down",
+    "stop:kafka:docker": "docker-compose -f docker-compose.yml down",
+    "start:bff": "node bff/server.js",
+    "start": "node bff/server.js",
+    "start:payment": "node microservices/payment-service.js",
+    "start:shipping": "node microservices/shipping-service.js"
+  },
+  "author": "Patrick Obermeier",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "kafkajs": "^2.2.4"
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kafka Demo - Order Status</title>
+  </head>
+  <body>
+    <h1>Submit an Order</h1>
+    <button id="orderBtn">Create Order</button>
+    <h2>Status Updates:</h2>
+    <ul id="statusList"></ul>
+
+    <script>
+      // On button click, send a new order request to the BFF.
+      document.getElementById("orderBtn").addEventListener("click", () => {
+        fetch("/order", { method: "POST" })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Order created:", data);
+          })
+          .catch((err) => console.error(err));
+      });
+
+      // Set up Server-Sent Events to listen for status updates from the BFF.
+      const eventSource = new EventSource("/events");
+      eventSource.onmessage = (event) => {
+        const statusList = document.getElementById("statusList");
+        const li = document.createElement("li");
+        li.textContent = event.data;
+        statusList.appendChild(li);
+      };
+    </script>
+  </body>
+</html>
